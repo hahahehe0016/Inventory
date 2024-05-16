@@ -1,0 +1,49 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Employee Page {% endblock %}
+
+{% block content %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+
+<!--Table-->
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-4"></div>
+        <div class="col-md-12">
+            <table class="table bg-white" id="user">
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">Action</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for worker in workers %}
+                    <tr>
+                        <th scope="row"><a class="btn btn-info btn-sm" href="{% url 'dashboard-employee-detail' worker.id %}">View</a></th>
+                        <td>{{ worker.username }}</td>
+                        <td>{{ worker.first_name }}</td>
+                        <td>{{ worker.last_name }}</td>
+                        <td>{{ worker.profile.role_department }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--End Table-->
+
+
+{% endblock %}

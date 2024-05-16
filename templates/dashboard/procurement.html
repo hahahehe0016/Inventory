@@ -1,0 +1,234 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Page Admin {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+<!--Table-->
+
+
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Assets Table
+                </div>
+<div class="container">
+    <!--MODAL BUTTON HERE-->
+    <div class="row my-3">
+    <button class="btn btn-info" data-toggle="modal" data-target="#myModal" id="addModal">
+        Add Procurement <i class="fas fa-plus"></i>
+    </button>
+    &nbsp;&nbsp;
+    <a class="btn btn-success btn-sm" href="{% url 'export-excel' %}">Export Excel</a>
+    &nbsp;&nbsp;
+    <a class="btn btn-success btn-sm" href="{% url 'export-csv' %}">Export CSV</a>
+
+    {% if items1.has_previous and items1.has_next %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.next_page_number}}">Next</a>
+
+            {% elif items1.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif items1.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.next_page_number}}">Next</a>
+
+            {% else %}
+            &nbsp;&nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#" >Prev</a>
+            &nbsp;
+            <span>Page 1 of {{ p.num_pages }} <b>|</b> <i>(Items {{ item_range }} to {{ item_range2 }})</i></span>
+            &nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+    {% endif %}
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row my-1">
+        <!-- solo search bar -->
+        <!--<div class="input-group">
+            <form>
+            <input type="text" placeholder="Search serial #" name="q" class="form-control" id="search-bar" />
+             <button class="btn btn-dark" id="search">Search</button>
+            </form> 
+        </div>-->
+
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4>Enroll a procurement:</h4>
+            <hr>
+        </div>
+        <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-success btn-block" type="submit" value="Add Product">
+                <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Close</button>
+            </form>
+        </div>
+      </div>
+      
+        </div>
+  </div>
+
+  {% for message in messages %}
+        {% if message %}
+        <div style="padding-left: 15px;">
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <div class="col-md-12">
+            <table class="table bg-white" id="prod">
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        
+                        <th scope="col">PO #</th>
+                        <th scope="col">ATN</th>
+                        <th scope="col">Model Name</th>
+                        <th scope="col">Asset Type</th>
+                        <th scope="col">Serial #</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if items_1 %}
+                    {% for item in items_1 %}
+                        
+                    <tr>
+                        <td>{{ item.po }}</td>
+                        <td>{{ item.atn }}</td>
+                        <td>{{ item.model_name }}</td>
+                        <td>{{ item.asset_type }}</td>
+                        <td>{{ item.serial_number}}</td>  
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="{% url 'dashboard-product-view' item.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-update' item.id %}"><i class="fas fa-pen"></i></a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'dashboard-product-delete' item.id %}"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                        
+                    {% endfor %}
+                        
+                        
+                        {% else %}
+                        
+                        <td colspan="6">No results found!</td> 
+                                
+                        {% endif %}
+                </tbody>
+            </table>
+            
+            <div style="margin-bottom:10px;">
+            {% if items1.has_previous and items1.has_next %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.next_page_number}}">Next</a>
+
+            {% elif items1.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif items1.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items1.next_page_number}}">Next</a>
+
+            {% else %}
+            
+            <a class="btn btn-info btn-sm disabled" href="#" >Prev</a>
+            &nbsp;
+            <span>Page 1 of {{ p.num_pages }} <b>|</b> <i>(Items {{ item_range }} to {{ item_range2 }})</i></span>
+            &nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+            {% endif %}
+
+            
+            <!--{% if items.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            {% endif %}
+
+            {% if items.has_next %}
+            
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+            
+
+            {% endif %}-->
+
+
+
+            
+
+            
+        </div>
+    </div>
+
+    <!--<form method="GET" enctype="multipart/form-data">
+    <div class="card" style="width: 18rem">
+        <div class="card-title">
+            <div class="card-body">
+                <h5>Filters: </h5>
+                {{ myFilter.form|crispy }}
+                <button class="btn btn-success" type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+    </form>-->
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+    
+    const open = document.getElementById('open');
+    const modal_container = document.getElementById('modal_container');
+    const close = document.getElementById('close');
+
+    open.addEventListener('click', () => {
+      modal_container.classList.add('show')
+    })
+
+    close.addEventListener('click', () => {
+      modal_container.classList.remove('show')
+    })
+
+</script>
+
+<!--End Table-->
+
+
+{% endblock %}

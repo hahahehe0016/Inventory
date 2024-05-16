@@ -1,0 +1,30 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Update Page {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5">
+        
+            <div class="col md-6 offset-md-3">
+            <div class="border bg-white p-3">
+                <h3>Update System Unit</h3>
+                <hr>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input class="btn btn-info" type="submit" value="Update">
+                    <a class="btn btn-secondary" href="{% url 'dashboard-component' %}">Cancel</a>
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Disposal Page {% endblock %}
+
+
+{% block content %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+<!--Table-->
+
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-md-12">
+                <div class="card" style="padding-bottom: 10px;">
+                    <div class="card-header bg-dark text-white">
+                        Job Order Overview
+                    </div>
+    <div class="row my-1">
+        <div class="col-md-12">
+        <div class="container">
+            <div class="row my-3">
+            <div class="col-md-12">
+                <div style="padding-left: 15px;">
+            <a href="{% url 'dashboard-disposal' %}"><input class="btn btn-primary" type="submit" value="Add job order"></a>
+            {% if items.has_previous and items.has_next %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% elif items.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif items.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% else %}
+            &nbsp;&nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#" >Prev</a>
+            &nbsp;
+            <span>Page 1 of {{ p.num_pages }} <b>|</b> <i>(Items {{ item_range }} to {{ item_range2 }})</i></span>
+            &nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+    {% endif %}
+                </div>  
+</div>
+</div>
+
+        <div>
+        {% for message in messages %}
+            {% if message %}
+            <div style="padding-left: 15px;">
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+
+        <div class="col-md-12">
+            <table class="table bg-white" id="disposal">
+                {% if orders %}
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">Job Order #</th>
+                        <th scope="col">Job Order Item</th>
+                        
+                        <th scope="col">Order by</th>
+                        
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.jo }}</td>
+                        <td>{{ order.product }}</td>
+                        
+                        <td>
+                            {{ order.employee.username }}
+                        </td>
+                        
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="{% url 'dashboard-order-view' order.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a class="btn btn-success btn-sm" href="{% url 'dashboard-order-approval' order.id %}"><i class="bi bi-hand-thumbs-up-fill"></i></a>
+                        </td> 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">Job Order Item</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Order by</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6">No job order/s yet!</td> 
+                </tbody>
+                {% endif %}
+            </table>
+
+           
+    {% if items.has_previous and items.has_next %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% elif items.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif items.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% else %}
+            
+            <a class="btn btn-info btn-sm disabled" href="#" >Prev</a>
+            &nbsp;
+            <span>Page 1 of {{ p.num_pages }} <b>|</b> <i>(Items {{ item_range }} to {{ item_range2 }})</i></span>
+            &nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+    {% endif %}
+
+        
+    </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+
+
+<!--End Table-->
+
+{% endblock %}

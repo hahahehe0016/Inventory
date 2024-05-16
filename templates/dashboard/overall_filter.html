@@ -1,0 +1,94 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Page Admin {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+<div class="container">
+    <div class="row my-4">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Categories
+                </div>
+                <div class="card-body">
+
+                    <h5>Select category: </h5>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mt-4">
+                            <a class="text-decoration-none text-dark" href="{% url 'dashboard-product-filter' %}">
+                                <div class="card my-card shadow text-center p-4">
+                                    <h4>Assets <i class="fa fa-inbox" aria-hidden="true"></i> </h4>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-12 mt-4">
+                            <a class="text-decoration-none text-dark" href="{% url 'dashboard-allocation-filter' %}">
+                                <div class="card my-card shadow text-center p-4">
+                                    <h4>Allocations <i class="fa fa-map-marker" aria-hidden="true"></i></h4>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-12 mt-4">
+                            <a class="text-decoration-none text-dark" href="{% url 'dashboard-employee-filter' %}">
+                                <div class="card my-card shadow text-center p-4">
+                                    <h4>Employees <i class="fa fa-users" aria-hidden="true"></i></h4>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-12 mt-4">
+                            <a class="text-decoration-none text-dark" href="{% url 'dashboard-component-filter' %}">
+                                <div class="card my-card shadow text-center p-4">
+                                    <h4>Components <i class="fa fa-th" aria-hidden="true"></i></h4>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-12 mt-4">
+                            <a class="text-decoration-none text-dark" href="#">
+                                <div class="card my-card shadow text-center p-4">
+                                    <h4>Disposals <i class="fa fa-trash" aria-hidden="true"></i></h4>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    const open = document.getElementById('open');
+    const modal_container = document.getElementById('modal_container');
+    const close = document.getElementById('close');
+
+    open.addEventListener('click', () => {
+      modal_container.classList.add('show')
+    })
+
+    close.addEventListener('click', () => {
+      modal_container.classList.remove('show')
+    })
+
+</script>
+
+<!--End Table-->
+
+
+{% endblock %}

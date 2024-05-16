@@ -1,0 +1,542 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Flipventory Home {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% if user.is_authenticated and user.is_staff and user.is_superuser %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+<br>
+<div class="container">
+    <div class="row mt-12">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Items Overview <i class="fa fa-plane" aria-hidden="true"></i>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                        <tr>
+                          <th scope="col" class="col-sm-4"><b>Users:<b></th>
+                          <td>{{ workers_count }} user/s</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Employees:<b></th>
+                          <td>{{ employee_count }} employee/s</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Items enrolled:<b></th>
+                          <td>{{ products_count }} item/s</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Disposed items:<b></th>
+                          <td>{{ orders_count }} disposed item/s</td>
+                        </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row mt-12">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    Alerts <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                        <tr>
+                          <th scope="col" class="col-sm-4"><b>Malfunctioning items:<b></th>
+                          <td>{{ not_working }}</td>
+                          <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="{% url 'dashboard-malfunction' %}">See list</a></td>
+                        </tr>
+                        <!--<tr>
+                          <th scope="col"><b>Pending Job Orders:<b></th>
+                          <td>Sample 1</td>
+                        </tr>-->
+                        <tr>
+                          <th scope="col"><b>Assets with no images:<b></th>
+                          <td>{{ no_images }}</td>
+                          <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="{% url 'dashboard-no-images' %}">See list</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Items w/o SN :<b></th>
+                          <td>{{ no_sn }}</td>
+                          <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="#">See list</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="col"><b>Items w/o OR :<b></th>
+                            <td>{{ no_or }}</td>
+                            <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="#">See list</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="col"><b>Added last 30 days:<b></th>
+                            <td>{{ last_month }}</td>
+                            <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="#">See list</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="col"><b>Admin Access:<b></th>
+                            <td>True</td>
+                            
+                          </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="bg-white">
+                <div class="card-header bg-info text-white">
+                        Orders Statistics
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white">
+                <div class="card-header bg-info text-white">
+                        Inventory Statistics
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>-->
+
+
+<!--
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="bg-white">
+                <canvas id="myChart1" width="400" height="300"></canvas>
+                <script>
+                    var ctx = document.getElementById('myChart1').getContext('2d');
+                    var myChart1 = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: [{% for order in orders %} '{{ order.product.name }}', {% endfor %}],
+                            datasets: [{
+                                label: 'Products',
+                                data: [{% for order in orders %} '{{ order.order_quantity }}', {% endfor %}],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(211, 99, 132, 1)',
+                                    'rgba(234, 16, 235, 1)',
+                                    'rgba(25, 206, 86, 1)',
+                                    'rgba(75, 142, 192, 1)',
+                                    'rgba(157, 102, 255, 1)',
+                                    'rgba(253, 159, 64, 1)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(211, 99, 132, 1)',
+                                    'rgba(234, 16, 235, 1)',
+                                    'rgba(25, 206, 86, 1)',
+                                    'rgba(75, 142, 192, 1)',
+                                    'rgba(157, 102, 255, 1)',
+                                    'rgba(253, 159, 64, 1)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white">
+                <canvas id="myChart" width="400" height="300"></canvas>
+                <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [{% for product in products %} '{{ product.name }}', {% endfor %}],
+                            datasets: [{
+                                label: 'Products',
+                                data: [{% for product in products %} '{{ product.quantity }}', {% endfor %}],
+                                backgroundColor: [
+                                    'rgba(211, 99, 132, 1)',
+                                    'rgba(234, 16, 235, 1)',
+                                    'rgba(25, 206, 86, 1)',
+                                    'rgba(75, 142, 192, 1)',
+                                    'rgba(157, 102, 255, 1)',
+                                    'rgba(253, 159, 64, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+{% elif user.is_authenticated and user.is_staff %}
+
+{% include 'partials/sidepanel_staff.html' %}
+
+{% include 'partials/topnav.html' %}
+
+<br>
+<div class="container">
+    <div class="row mt-12">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Items Overview <i class="fa fa-plane" aria-hidden="true"></i>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                        <tr>
+                          <th scope="col" class="col-sm-4"><b>Users:<b></th>
+                          <td>{{ workers_count }} user/s</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Employees:<b></th>
+                          <td>{{ employee_count }} employee/s</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Items enrolled:<b></th>
+                          <td>{{ products_count }} item/s</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Disposed items:<b></th>
+                          <td>{{ orders_count }} disposed item/s</td>
+                        </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row mt-12">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    Alerts <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                        <tr>
+                          <th scope="col" class="col-sm-4"><b>Malfunctioning items:<b></th>
+                          <td>{{ not_working }}</td>
+                          <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="{% url 'dashboard-malfunction' %}">See list</a></td>
+                        </tr>
+                        <!--<tr>
+                          <th scope="col"><b>Pending Job Orders:<b></th>
+                          <td>Sample 1</td>
+                        </tr>-->
+                        <tr>
+                          <th scope="col"><b>Assets with no images:<b></th>
+                          <td>{{ no_images }}</td>
+                          <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="{% url 'dashboard-no-images' %}">See list</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Items w/o SN :<b></th>
+                          <td>{{ no_sn }}</td>
+                          <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="#">See list</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="col"><b>Items w/o OR :<b></th>
+                            <td>{{ no_or }}</td>
+                            <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="#">See list</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="col"><b>Added last 30 days:<b></th>
+                            <td>{{ last_month }}</td>
+                            <td class="col-sm-2"><a class="btn btn-primary btn-sm" href="#">See list</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="col"><b>Admin Access:<b></th>
+                            <td>False</td>
+                            
+                          </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% else %}
+
+{% include 'partials/topnav2.html' %}
+
+<!--<div class="container">
+    <div class="row mt-12">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Summary
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                        <tr>
+                          <th scope="col"><b>Users:<b></th>
+                          <td>Another one</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Employees:<b></th>
+                          <td>Another two</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Items procured:<b></th>
+                          <td>Another three</td>
+                        </tr>
+                        <tr>
+                          <th scope="col"><b>Disposed items:<b></th>
+                          <td>Another four</td>
+                        </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<!--
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="bg-white">
+                <div class="card-header bg-info text-white">
+                        Orders Statistics
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white">
+                <div class="card-header bg-info text-white">
+                        Inventory Statistics
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="bg-white">
+                <canvas id="myChart1" width="400" height="300"></canvas>
+                <script>
+                    var ctx = document.getElementById('myChart1').getContext('2d');
+                    var myChart1 = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: [{% for order in orders %} '{{ order.product.name }}', {% endfor %}],
+                            datasets: [{
+                                label: 'Products',
+                                data: [{% for order in orders %} '{{ order.order_quantity }}', {% endfor %}],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(211, 99, 132, 1)',
+                                    'rgba(234, 16, 235, 1)',
+                                    'rgba(25, 206, 86, 1)',
+                                    'rgba(75, 142, 192, 1)',
+                                    'rgba(157, 102, 255, 1)',
+                                    'rgba(253, 159, 64, 1)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(211, 99, 132, 1)',
+                                    'rgba(234, 16, 235, 1)',
+                                    'rgba(25, 206, 86, 1)',
+                                    'rgba(75, 142, 192, 1)',
+                                    'rgba(157, 102, 255, 1)',
+                                    'rgba(253, 159, 64, 1)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white">
+                <canvas id="myChart" width="400" height="300"></canvas>
+                <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [{% for product in products %} '{{ product.name }}', {% endfor %}],
+                            datasets: [{
+                                label: 'Products',
+                                data: [{% for product in products %} '{{ product.quantity }}', {% endfor %}],
+                                backgroundColor: [
+                                    'rgba(211, 99, 132, 1)',
+                                    'rgba(234, 16, 235, 1)',
+                                    'rgba(25, 206, 86, 1)',
+                                    'rgba(75, 142, 192, 1)',
+                                    'rgba(157, 102, 255, 1)',
+                                    'rgba(253, 159, 64, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="container">
+    <section class="mx-auto my-5" style="max-width: 23rem;">
+        
+      <div class="card booking-card v-2 mt-2 mb-4 rounded-bottom">
+        <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+          <img src="/media/Products/dual-monitor-anime-3.jpg" class="img-fluid">
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title font-weight-bold"><a>Oops!</a></h4>
+          <hr class="my-4">
+          <!--<ul class="list-unstyled list-inline mb-2">
+            <li class="list-inline-item me-0"><i class="fa fa-star fa-xs"> </i></li>
+            <li class="list-inline-item me-0"><i class="fa fa-star fa-xs"></i></li>
+            <li class="list-inline-item me-0"><i class="fa fa-star fa-xs"></i></li>
+            <li class="list-inline-item me-0"><i class="fa fa-star fa-xs"></i></li>
+            <li class="list-inline-item"><i class="fa fa-star-half-alt fa-xs"></i></li>
+          </ul>-->
+          <p class="card-text">It seems that you have to ask privileges from developers. Please contact them below on their schedules.</p>
+          <hr class="my-4">
+          <p class="h5 font-weight-bold mb-4">Opening hours</p>
+          <ul class="list-unstyled d-flex justify-content-start align-items-center mb-0">
+            <li>Monday - Friday > &nbsp;</li>
+            <li>
+              <div class="chip ms-3">06:00AM -&nbsp;</div>
+            </li>
+            <li>
+              <div class="chip ms-0 me-0">10:00PM</div>
+            </li>
+          </ul>
+          <ul class="list-unstyled d-flex justify-content-start align-items-center mb-0">
+            <li>Saturday - Sunday > &nbsp;</li>
+            <li>
+                <div class="chip ms-3">CLOSED</div>
+              </li>
+          </ul>
+          
+        </div>
+      </div>
+      
+    </section>
+  </div>
+
+
+
+
+{% endif %}
+
+{% endblock %}

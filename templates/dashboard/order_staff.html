@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Disposal Page {% endblock %}
+
+
+{% block content %}
+
+{% include 'partials/topnav.html' %}
+
+<!--Table-->
+<div class="container">
+    <div class="row my-4">
+        
+        <div class="col-md-4">
+            <a href="{% url 'dashboard-disposal' %}"><input class="btn btn-primary" type="submit" value="Add job order"><br><br></a>
+        </div>
+
+        <div>
+        {% for message in messages %}
+            {% if message %}
+            <div style="padding-left: 15px;">
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+
+        <div class="col-md-12">
+            <table class="table bg-white" id="disposal">
+                {% if orders %}
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">Job Order #</th>
+                        <th scope="col">Job Order Item</th>
+                        
+                        <th scope="col">Order by</th>
+                        
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.jo }}</td>
+                        <td>{{ order.product }}</td>
+                        
+                        <td>
+                            {{ order.employee.username }}
+                        </td>
+                        
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="{% url 'dashboard-order-view' order.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        </td> 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">Job Order Item</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Order by</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6">No job order/s yet!</td> 
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--End Table-->
+
+{% endblock %}

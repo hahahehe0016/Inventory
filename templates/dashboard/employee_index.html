@@ -1,0 +1,81 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Disposal {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    For Disposal Request
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="btn btn-info btn-block" type="submit" value="Make Disposal Request">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    For Disposal Records (Job Orders)
+                </div>
+                <div class="card-body">
+                    <table class="table bg-white">
+                        {% if orders %}
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th scope="col">Disposal</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Date</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            {% if order.employee == user %}
+                            <tr>
+                                <td>{{ order.product.model_name }}</td>
+                                <td>{{ order.product.asset_type}}</td>
+                                <td>{{ order.date}}</td>
+                                
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+
+                        {% else %}
+
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <th scope="col">Disposal</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6">No disposal requests found!</td> 
+                        </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+            <br><a href="{% url 'dashboard-order' %}"><input class="btn btn-primary" type="submit" value="Go to Disposal Home"></a>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

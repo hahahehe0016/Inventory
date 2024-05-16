@@ -1,0 +1,110 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Page Admin {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% include 'partials/topnav.html' %}
+
+<!--Table-->
+
+
+<div class="container">
+    <div class="row my-4">
+        <!-- solo search bar -->
+        <!--<div class="input-group">
+            <form>
+            <input type="text" placeholder="Search serial #" name="q" class="form-control" id="search-bar" />
+             <button class="btn btn-dark" id="search">Search</button>
+            </form> 
+        </div>-->
+        <div style="padding-left: 15px;">
+        <div class="alert" id="yellow" style="width: 480px;">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <strong>Note!</strong> Please put pictures on these items for verification!
+          </div>
+        </div>
+
+        <div class="col-md-12">
+            <table class="table bg-white" id="prod">
+                <thead class="bg-danger">
+                    <tr class="text-white">
+                        {% if items %}
+                        
+                        <th scope="col">Model Name</th>
+                        <th scope="col">Asset Type</th>
+                        <th scope="col">Serial #</th>
+                        <th scope="col">OR #</th>
+                        <th scope="col">Remarks</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+            
+                        <td>{{ item.model_name }}</td>
+                        <td>{{ item.asset_type }}</td>
+                        <td>{{ item.serial_number}}</td>
+                        <td>{{ item.OR_number}}</td>
+                        <td>{{ item.remarks}}</td>
+                        
+                    </tr>
+                    {% endfor %}
+
+                        {% else %}
+                        <thead class="bg-info">
+                            <tr class="text-white">
+                                
+                                <th scope="col">Model Name</th>
+                                <th scope="col">Asset Type</th>
+                                <th scope="col">Serial #</th>
+                                <th scope="col">OR #</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>No results found!</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                
+                        {% endif %}
+                </tbody>
+            </table>
+            
+            
+        </div>
+    </div>
+
+    
+</div>
+</div>
+
+<script type="text/javascript">
+    
+    const open = document.getElementById('open');
+    const modal_container = document.getElementById('modal_container');
+    const close = document.getElementById('close');
+
+    open.addEventListener('click', () => {
+      modal_container.classList.add('show')
+    })
+
+    close.addEventListener('click', () => {
+      modal_container.classList.remove('show')
+    })
+
+</script>
+
+<!--End Table-->
+
+
+{% endblock %}

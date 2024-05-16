@@ -1,0 +1,248 @@
+body{
+    background-image: url("/media/Background/green.jpg");
+    background: (249,231,212);
+}
+
+.my-card:hover{
+    transform: scale();
+    transition: 0.5s ease-in-out;
+    background-color: #E6C9C9;
+    transition: 0.4s;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:600|Open+Sans:600&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+.sidebar{
+  position: fixed;
+  width: 240px;
+  left: -240px;
+  height: 100%;
+  background: #4BB5F1;
+  transition: all .5s ease;
+  z-index: 999;
+}
+.sidebar header{
+  font-size: 28px;
+  color: black;
+  line-height: 70px;
+  text-align: center;
+  background: black;
+  user-select: none;
+  font-family: 'Montserrat', sans-serif;
+}
+.sidebar a{
+  display: block;
+  height: 65px;
+  width: 100%;
+  color: white;
+  line-height: 65px;
+  padding-left: 30px;
+  box-sizing: border-box;
+  border-bottom: 1px solid black;
+  border-top: 1px solid rgba(255,255,255,.1);
+  border-left: 5px solid transparent;
+  font-family: 'Open Sans', sans-serif;
+  transition: all .5s ease;
+}
+.sidebar a.active,a:hover{
+  /*border-left: 5px solid #b93632;*/
+  color: #b93632;
+}
+.sidebar a i{
+  font-size: 23px;
+  margin-right: 16px;
+}
+.sidebar a span{
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+#check{
+  display: none;
+}
+label #btn,label #cancel{
+  position: fixed;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid #262626;
+  margin: 15px 30px;
+  font-size: 29px;
+  background: #262626;
+  height: 45px;
+  width: 45px;
+  text-align: center;
+  line-height: 45px;
+  transition: all .5s ease;
+  z-index: 999;
+}
+label #cancel{
+  opacity: 0;
+  visibility: hidden;
+}
+#check:checked ~ .sidebar{
+   left: 0; 
+}
+#check:checked ~ label #btn{
+  margin-left: 245px;
+  opacity: 0;
+  visibility: hidden;
+}
+#check:checked ~ label #cancel{
+  margin-left: 245px;
+  opacity: 1;
+  visibility: visible;
+}
+@media(max-width : 860px){
+  .sidebar{
+    height: auto;
+    width: 70px;
+    left: 0;
+    margin: 100px 0;
+  }
+  header,#btn,#cancel{
+    display: none;
+  }
+  span{
+    position: absolute;
+    margin-left: 23px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .sidebar a{
+    height: 60px;
+  }
+  .sidebar a i{
+    margin-left: -10px;
+  }
+  a:hover {
+    width: 200px;
+    background: inherit;
+  }
+  .sidebar a:hover span{
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.tab {
+  text-align: center;
+  text-justify:values;
+  border-spacing: 5px;
+  margin-left: 40px; 
+  margin-right: 40px; 
+}
+
+#search {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+#search-bar{
+  
+}
+
+#addModal{
+  margin-left: 15px;
+}
+
+/*
+#footer {
+  position:absolute;
+  bottom: 0;
+  width:100%;
+}
+*/
+
+#addModal_emp{
+  margin-left: 15px;
+}
+
+table{
+  border-collapse: collapse;
+  text-align: center;
+}
+
+th, td, tr{
+  border-bottom: 1px solid #ddd;
+}
+
+tr ,td {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+#prod tr:nth-child(even){background-color: #f2f2f2;}
+#prodf tr:nth-child(even){background-color: #f2f2f2;}
+#emp tr:nth-child(even){background-color: #f2f2f2;}
+#user tr:nth-child(even){background-color: #f2f2f2;}
+#disposal tr:nth-child(even){background-color: #f2f2f2;}
+#prodView tr:nth-child(even){background-color: #f2f2f2;}
+
+
+#disabledLink{
+  pointer-events: none;
+    color: gray;
+}
+
+.product-image{
+  margin-top: 10px;
+  height: 400px;
+  width: 600px;
+  margin-left: 260px;
+  margin-bottom: -10px;
+}
+
+.product-image{
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+#UnitView{
+  margin-left: 15px;
+}
+
+#myModal1{
+  padding-right: 410px;
+}
+
+
+.closebtn {
+  margin-left: 15px;
+  color: black;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+#yellow {
+  padding: 20px;
+  background-color: yellow;
+  color: black;
+  border-radius: 5px;
+}
+
+#notworking {
+  padding: 20px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+}
+
+

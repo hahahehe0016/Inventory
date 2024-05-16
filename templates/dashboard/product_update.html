@@ -1,0 +1,101 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Update Page {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5" style="padding-right: 800px;">
+        
+            <div class="col md-6 offset-md-3">
+            <div class="border bg-white p-3" style="width: 1000px;">
+                <h3>Update Item</h3>
+                <hr>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!--First Row Update Form-->
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.model_name|as_crispy_field }}
+                        </div>
+    
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.asset_type|as_crispy_field }}
+                        </div>
+    
+                    </div>
+                    <!--End of the First Row-->
+
+                    <!--Second Row Update Form-->
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.serial_number|as_crispy_field }}
+                        </div>
+    
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.OR_number|as_crispy_field }}
+                        </div>
+    
+                    </div>
+                    <!--End of the Second Row-->
+
+                    <!--Third Row Update Form-->
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.department|as_crispy_field }}
+                        </div>
+    
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.supplier_name|as_crispy_field }}
+                        </div>
+    
+                    </div>
+                    <!--End of the Third Row-->
+
+                    <!--Fourth Row Update Form-->
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.status|as_crispy_field }}
+                        </div>
+    
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.date|as_crispy_field }}
+                        </div>
+
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.asset_image|as_crispy_field }}
+                        </div>
+    
+                    </div>
+                    <!--End of the Fourth Row-->
+
+                    <!--Fifth Row Update Form-->
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4 mb-0">
+                            {{ form.remarks|as_crispy_field }}
+                        </div>
+    
+                    </div>
+                    <!--End of the Fifth Row-->
+
+
+                    <input class="btn btn-info" type="submit" value="Update">
+                    <a class="btn btn-secondary" href="{% url 'dashboard-product' %}">Cancel</a>
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

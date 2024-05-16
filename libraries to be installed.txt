@@ -1,0 +1,39 @@
+django-filter ( pip install django-filter )
+pillow ( pip install pillow )
+crispy tags ( pip install django-crispy-forms ) 
+excel_app ( pip install xlwt )
+SessionTimeout ( pip install django-session-timeout )
+django ( python -m pip install Django )
+pip ( python get-pip.py )
+dateutil ( pip install python-dateutil )
+dbbackup (pip install django-dbbackup)
+import_export (pip install django-import-export)
+
+
+
+add this to project settings
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+and use this to enable the crispy form
+{% load crispy_form_tags %}
+
+For creation
+django.contrib.models import user #for users
+django.contrib.form import UserCreationForm #for creating users
+
+For logging authentication, always visit:
+django.contrib.auth import views as auth_views
+Then create a path:
+path('', auth_views.LoginView.as_view(template_name = 'user/login.html'), name='user-login')
+path('logout/', auth_views.LogoutView.as_view(template_name = 'user/logout.html'), name='user-logout')
+Make sure you put this URL patters into the main URLs.
+
+After that, make sure to make a redirect login URL in the settings:
+LOGIN_REDIRECT_URL = '(put your webpage name here)'
+
+Always add login auth in the views so that it requires a login:
+@login_required(login_url='user-login')
+
+
+OPTIONAL NOTE:
+After installing, you may encounter bootstrap or stylesheets not cascading the inventory application. Go to the settings of the inventory app and set the "DEBUG" to "TRUE" then reload, and then switch to "FALSE" once again.

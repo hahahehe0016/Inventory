@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Disposal Page {% endblock %}
+
+{% block content %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+<!--Table-->
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <table class="table bg-white" id="disposal">
+                {% if disposals %}
+                <thead class="bg-danger">
+                    <tr class="text-white">
+                        <th scope="col">Disposed Item</th>
+                        <th scope="col">Serial Number</th>
+                        <th scope="col">Remarks</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for disposal in disposals %}
+                    <tr>
+                        <td>{{ disposal.disposal_name }}</td>
+                        <td>{{ disposal.disposal_serial_number }}</td>
+                        <td>{{ disposal.remarks }}</td>
+                        <td>{{ disposal.disposal_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <thead class="bg-danger">
+                    <tr class="text-white">
+                        <th scope="col">Disposed Item</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6">No disposals yet!</td> 
+                </tbody>
+                {% endif %}
+            </table>
+
+            {% if items.has_previous and items.has_next %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% elif items.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif items.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% else %}
+            &nbsp;&nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#" >Prev</a>
+            &nbsp;
+            <span>Page 1 of {{ p.num_pages }} <b>|</b> <i>(Items {{ item_range }} to {{ item_range2 }})</i></span>
+            &nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+    {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--End Table-->
+
+{% endblock %}

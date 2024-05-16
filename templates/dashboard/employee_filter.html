@@ -1,0 +1,135 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Employee Filter Admin {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% load inventory_extras %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+<!--Table-->
+
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+        <form method="GET" enctype="multipart/form-data">
+            <div class="card">
+                <div class="card-title">
+                    <div class="card-body">
+                        
+                        <h4>Employee Filter: </h4>
+                        <hr>
+                        {{ myFilter.form|crispy }}
+                        <button class="btn btn-success" type="submit">Search</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+
+        <div class="col-md-8">
+            <table class="table bg-white" id="prodf">
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        {% if page %}
+                        
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Email</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for item in page %}
+                    <tr>
+                        
+                        <td>{{ item.in_name }}</td>
+                        <td>{{ item.out_name }}</td>
+                        <td>{{ item.emp_department}}</td>
+                        <td>{{ item.emp_email}}</td>
+                        
+                    </tr>
+                    {% endfor %}
+
+                        {% else %}
+                        <thead class="bg-info">
+                            <tr class="text-white">
+                                
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Email</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td colspan="6">No employee/s found!</td> 
+                                
+                        {% endif %}
+                </tbody>
+            </table>
+            
+
+            {% if page.has_previous and page.has_next %}
+            <a class="btn btn-info btn-sm" href="{% inventory_url page.previous_page_number 'page' request.GET.urlencode %}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% inventory_url page.next_page_number 'page' request.GET.urlencode %}">Next</a>
+
+            {% elif page.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% inventory_url page.previous_page_number 'page' request.GET.urlencode %}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif page.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% inventory_url page.next_page_number 'page' request.GET.urlencode %}">Next</a>
+
+            {% else %}
+            
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page 1 of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+            {% endif %}
+
+            <!--{% if items.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-filter' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            {% endif %}
+
+            {% if items.has_next %}
+            
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-filter' %}?page={{items.next_page_number}}">Next</a>
+            
+            {% endif %}-->
+
+            <a class="btn btn-success btn-sm" href="{% url 'export-excel' %}">Export Excel</a>
+            <a class="btn btn-success btn-sm" href="{% url 'export-csv' %}">Export CSV</a>
+
+        </div>
+    </div>
+
+    
+</div>
+
+
+<!--End Table-->
+
+
+{% endblock %}

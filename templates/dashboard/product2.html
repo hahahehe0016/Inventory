@@ -1,0 +1,158 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Page Viewer {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% include 'partials/topnav2.html' %}
+
+<!--Table-->
+
+
+<div class="container">
+    <div class="row my-4">
+        <!--<div class="col-md-4">
+            {% for message in messages %}
+            {% if message %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="border bg-white p-3">
+                <h4>Add Products</h4>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input class="btn btn-success btn-block" type="submit" value="Add Product">
+                </form>
+            </div>
+        </div>-->
+        <div class="col-md-12">
+            <table class="table bg-white" id="prod">
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        {% if items %}
+                        <th scope="col">Item #</th>
+                        <th scope="col">PO #</th>
+                        <th scope="col">Model Name</th>
+                        <th scope="col">Asset Type</th>
+                        <th scope="col">Serial #</th>
+                        <th scope="col">OR #</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{forloop.counter0|add:page_object.start_index}}</td>
+                        <td>{{ item.po }}</td> 
+                        <td>{{ item.model_name }}</td>
+                        <td>{{ item.asset_type }}</td>
+                        <td>{{ item.serial_number}}</td>
+                        <td>{{ item.OR_number}}</td>
+                        
+                        <!--<td>
+                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-update' item.id %}">Edit</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'dashboard-product-delete' item.id %}">Delete</a>
+                        </td>-->
+                    </tr>
+                    {% endfor %}
+
+                    {% else %}
+
+                    <thead class="bg-info">
+                        <tr class="text-white">
+                            
+                            <th scope="col">Item #</th>
+                        <th scope="col">Model Name</th>
+                        <th scope="col">Asset Type</th>
+                        <th scope="col">Serial #</th>
+                        <th scope="col">OR #</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Actions</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>No results found!</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                    {% endif %}
+                    
+                </tbody>
+            </table>
+
+
+            {% if items.has_previous and items.has_next %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% elif items.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif items.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{items.next_page_number}}">Next</a>
+
+            {% else %}
+            
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page 1 of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+            {% endif %}
+            
+            <!--{% if items.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product2' %}?page={{items.previous_page_number}}">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            {% endif %}
+            {% if items.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product2' %}?page={{items.next_page_number}}">Next</a>
+            
+            {% endif %}-->
+
+            <a class="btn btn-success btn-sm" href="{% url 'export-excel' %}">Export Excel</a>
+            <a class="btn btn-success btn-sm" href="{% url 'export-csv' %}">Export CSV</a>
+        </div>
+    </div>
+
+    <!--<form method="GET">
+        <div class="card" style="width: 18rem">
+            <div class="card-title">
+                <div class="card-body">
+                    <h5>Filters: </h5>
+                    {{ myFilter.form|crispy }}
+                    <button class="btn btn-success" type="submit">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>-->
+
+</div>
+
+
+
+<!--End Table-->
+
+{% endblock %}

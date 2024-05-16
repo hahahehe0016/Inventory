@@ -1,0 +1,108 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Assembly Admin {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% include 'partials/sidepanel.html' %}
+
+<!--Table-->
+
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    System Unit Overview
+                </div>
+
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row mt-12">
+                            <div class="col-md-12">
+                                    <!--Table start-->
+                                      <table class="table" id="prodView">
+                                            <tr>
+                                              <th scope="col" class="col-sm-4"><b>ATN<b></th>
+                                              <td>{{ assembled.compo_atn }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>CATN<b></th>
+                                                <td>{{ assembled.catn }}</td>
+                                              </tr>
+                                            <tr>
+                                              <th scope="col"><b>Model Name<b></th>
+                                              <td>{{ assembled.compo_name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col"><b>Date Installed<b></th>
+                                              <td>{{ assembled.date_installed }}</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col"><b>Date Replaced<b></th>
+                                              <td>{{ assembled.date_replaced }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Status<b></th>
+                                                <td>{{ assembled.activeness }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Motherboard<b></th>
+                                                <td>{{ assembled.motherboard }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Processor<b></th>
+                                                <td>{{ assembled.processor }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>RAM #1<b></th>
+                                                <td>{{ assembled.RAM1 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>RAM #2<b></th>
+                                                <td>{{ assembled.RAM2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>RAM #3<b></th>
+                                                <td>{{ assembled.RAM3 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>RAM #4<b></th>
+                                                <td>{{ assembled.RAM4 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Power Supply Unit<b></th>
+                                                <td>{{ assembled.PSU }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>HDD #1<b></th>
+                                                <td>{{ assembled.HDD1 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>HDD #2<b></th>
+                                                <td>{{ assembled.HDD2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>HDD #3<b></th>
+                                                <td>{{ assembled.HDD3 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>HDD #4<b></th>
+                                                <td>{{ assembled.HDD4 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Others<b></th>
+                                                <td>{{ assembled.Others }}</td>
+                                            </tr>
+                                      </table>
+                                    <!--End table-->
+                                    <a class="btn btn-info btn-sm" onClick="window.history.back();"> <i class="fa fa-reply" aria-hidden="true"></i> Go back to assembly list</a>
+                            </div>
+                        </div>
+                    </div>
+
+{% endblock %}

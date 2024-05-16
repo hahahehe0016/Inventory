@@ -1,0 +1,241 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Page Admin {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% include 'partials/sidepanel.html' %}
+
+{% include 'partials/topnav.html' %}
+
+
+<div class="container">
+    <!--MODAL BUTTON HERE-->
+    <!--<div class="row my-4">
+    <button class="btn btn-info disabled" id="UnitView">
+        Per Unit View  <i class="fas fa-desktop"></i>
+    </button>
+
+    
+    <button class="btn btn-info" id="UnitView">
+        Per Component View <i class="fas fa-desktop"></i>
+    </button>
+    </div>-->
+
+
+
+    
+</div>
+
+        {% for message in messages %}
+        {% if message %}
+        <div style="padding-left: 15px;">
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    System Unit Overview
+                </div>
+
+    <div class="row my-2" style="padding-left: 35px; padding-top: 10px;">
+
+        <a class="btn btn-success btn-sm" href="{% url 'export-excel' %}">Export Excel</a>
+        &nbsp;&nbsp;
+        <a class="btn btn-success btn-sm" href="{% url 'export-csv' %}">Export CSV</a>
+        &nbsp;&nbsp;
+
+    {% if component.has_previous and component.has_next %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.previous_page_number}}">Prev</a>
+            &nbsp;
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            &nbsp;
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.next_page_number}}">Next</a>
+
+            {% elif component.has_previous %}
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.previous_page_number}}">Prev</a>
+            &nbsp;
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            &nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+            
+            {% elif component.has_next %}
+            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+            &nbsp;
+            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+            &nbsp;
+            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.next_page_number}}">Next</a>
+
+            {% else %}
+            &nbsp;&nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#" >Prev</a>
+            &nbsp;
+            <span>Page 1 of {{ p.num_pages }} <b>|</b> <i>(Items {{ item_range }} to {{ item_range2 }})</i></span>
+            &nbsp;
+            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+
+    {% endif %}
+    </div>
+
+    <div class="card-body">
+        <div class="container">
+            <div class="row mt-12">
+                
+                                
+                                <table class="table" id="prodView">
+
+                                    <thead class="bg-info">
+                                        <tr class="text-white">
+                                        <th scope="col">System Unit</th>
+                                        <th scope="col">Unit Name</th>
+                                        <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if assembled %}
+                                        <tr>
+                                            {% for assemble in assembled %}
+                                            <td>{{ assemble.compo_atn}}</td>
+                                            <td>{{ assemble.compo_name }}</td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm" href="{% url 'dashboard-component-view' assemble.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                <a class="btn btn-info btn-sm" href="{% url 'dashboard-component-update' assemble.id %}"><i class="fas fa-pen"></i></a>
+                                            </td>
+                                        </tr>
+                                            {% endfor %}
+
+                                        {% else %}
+
+                                        <tr>
+                                            <td colspan="6">No system unit found!</td> 
+                                        </tr>
+
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+
+                                <div class="row" style="padding-left: 8px;">
+                                    {% if component.has_previous and component.has_next %}
+                                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.previous_page_number}}">Prev</a>
+                                            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+                                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.next_page_number}}">Next</a>
+                                
+                                            {% elif component.has_previous %}
+                                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.previous_page_number}}">Prev</a>
+                                            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+                                            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+                                            
+                                            {% elif component.has_next %}
+                                            <a class="btn btn-info btn-sm disabled" href="#">Prev</a>
+                                            <span>Page {{ page_object.number }} of {{ p.num_pages }}</span>
+                                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-product' %}?page={{component.next_page_number}}">Next</a>
+                                
+                                            {% else %}
+                                            &nbsp;&nbsp;
+                                            <a class="btn btn-info btn-sm disabled" href="#" >Prev</a>
+                                            &nbsp;
+                                            <span>Page 1 of {{ p.num_pages }} <b>|</b> <i>(Items {{ item_range }} to {{ item_range2 }})</i></span>
+                                            &nbsp;
+                                            <a class="btn btn-info btn-sm disabled" href="#">Next</a>
+                                
+                                    {% endif %}
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    System Unit Overview
+                </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row mt-12">
+                        <div class="col-md-12">-->
+                                <!--Table start-->
+                                  <!--<table class="table" id="prodView">
+                                        <tr>
+                                          <th scope="col" class="col-sm-4"><b>Motherboard<b></th>
+                                          <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>Processor<b></th>
+                                            <td>Sample Info</td>
+                                          </tr>
+                                        <tr>
+                                          <th scope="col"><b>RAM 1<b></th>
+                                          <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="col"><b>RAM 2<b></th>
+                                          <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="col"><b>RAM 3<b></th>
+                                          <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>RAM 4<b></th>
+                                            <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>HDD 1<b></th>
+                                            <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>HDD 2<b></th>
+                                            <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>HDD 3<b></th>
+                                            <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>HDD 4<b></th>
+                                            <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>Power Supply Unit<b></th>
+                                            <td>Sample Info</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col"><b>Others<b></th>
+                                            <td>Sample Info</td>
+                                        </tr>
+                                  </table>-->
+                                <!--End table-->
+                        <!--</div>
+                    </div>
+                </div>
+        
+            </div>
+        
+</div>
+</div>
+</div>
+</div>-->
+
+
+<!--End Table-->
+
+
+{% endblock %}

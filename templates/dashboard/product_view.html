@@ -1,0 +1,116 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Product Page Admin {% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+
+<!--Table-->
+
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Product Overview
+                </div>
+
+                <div>
+
+                    <img src="{{ items.asset_image.url }}" class="product-image">
+
+                </div>
+
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row mt-12">
+                            <div class="col-md-12">
+                                    <!--Table start-->
+                                      <table class="table" id="prodView">
+                                            <tr>
+                                              <th scope="col" class="col-sm-4"><b>PO #<b></th>
+                                              <td>{{ items.po }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Asset Tag Number<b></th>
+                                                <td>{{ items.atn }}</td>
+                                              </tr>
+                                            <tr>
+                                              <th scope="col"><b>Model Name<b></th>
+                                              <td>{{ items.model_name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col"><b>Asset Type<b></th>
+                                              <td>{{ items.asset_type }}</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col"><b>Department<b></th>
+                                              <td>{{ items.department }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Serial Number<b></th>
+                                                <td>{{ items.serial_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>OR #<b></th>
+                                                <td>{{ items.OR_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Supplier Name<b></th>
+                                                <td>{{ items.supplier_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Status<b></th>
+                                                <td>{{ items.status }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Date<b></th>
+                                                <td>{{ items.date }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Remarks<b></th>
+                                                <td>{{ items.remarks }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col"><b>Added by<b></th>
+                                                <td>{{ items.adder }}</td>
+                                            </tr>
+                                      </table>
+                                    <!--End table-->
+                            </div>
+                        </div>
+                    </div>
+
+            <a class="btn btn-info btn-sm" onClick="window.history.back();"> <i class="fa fa-reply" aria-hidden="true"></i> Go Back To Product Lists</a>
+            <a class="btn btn-success btn-sm" href="{% url 'export-excel' %}">Export Excel</a>
+            <a class="btn btn-success btn-sm" href="{% url 'export-csv' %}">Export CSV</a>
+            
+
+            
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <!--<form method="GET" enctype="multipart/form-data">
+    <div class="card" style="width: 18rem">
+        <div class="card-title">
+            <div class="card-body">
+                <h5>Filters: </h5>
+                {{ myFilter.form|crispy }}
+                <button class="btn btn-success" type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+    </form>-->
+</div>
+
+
+<!--End Table-->
+
+
+{% endblock %}
